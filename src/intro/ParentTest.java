@@ -9,14 +9,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class ParentTest {
 	static WebDriver driver;
-	static By searchBoxLocator = By.id("navbar-query");
-	static By searchButtonLocator = By.id("navbar-submit-button");
+	static By searchBoxLocator = By.cssSelector("[name=\"q\"]");
+	static By searchButtonLocator = By.id("suggestion-search-button");
 
 	public static void setUp() {
 		//System.setProperty("webdriver.chrome.driver", "C:\\automation\\drivers\\chromedriver.exe");  //propiedad explorador chrome		
 		driver = new ChromeDriver();  //driver de chrome
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.navigate().to("http:\\imdb.com");//navegar a la pagina de IMDB.com
+
 	}
 
 	public static void clickElement(By elementLocator) {
@@ -39,7 +40,7 @@ public class ParentTest {
 
 	public static void testMovieSearch(String movieName, String movieStar, String movieYear) {
 
-		inputText(searchBoxLocator, movieName);						
+		inputText(searchBoxLocator, movieName);
 		clickElement(searchButtonLocator);
 
 		//Verificar que exista un link de esa pelicula	
@@ -73,7 +74,7 @@ public class ParentTest {
 		else
 			System.out.println("Movie " + movieName + " does not exist.");
 		
-		
+
 	}
 
 	public static void tearDown() {

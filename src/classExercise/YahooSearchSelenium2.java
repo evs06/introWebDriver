@@ -18,11 +18,13 @@ public class YahooSearchSelenium2 {
 		//busca una palabra clave
 		buscarPalabraClave("selenium");
 		//darle click al link apropiado
-		darClickAlLink("Selenium - Web Browser Automation");
+		darClickAlLink("Selenium");
 		//cambiar de pagina
 		cambiarDePagina();
 		//darle click al link de descarga
-		darClickAlLink("Download");
+		darClickAlLink("Downloads");
+		//Destruye lo abierto
+		destruirConfiguracion();
 	}
 
 	private static void cambiarDePagina() {
@@ -42,8 +44,8 @@ public class YahooSearchSelenium2 {
 	}
 
 	private static void buscarPalabraClave(String string) {
-		WebElement searchBox = driver.findElement(By.id("uh-search-box"));
-		WebElement searchButton = driver.findElement(By.id("uh-search-button"));
+		WebElement searchBox = driver.findElement(By.cssSelector("[role=\"combobox\"]"));
+		WebElement searchButton = driver.findElement(By.className("D(tbc)"));
 		
 		searchBox.clear();
 		searchBox.sendKeys("Selenium");
@@ -54,9 +56,14 @@ public class YahooSearchSelenium2 {
 	private static void configurarNavegador(String string) {
 		
 		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(30,  TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5,  TimeUnit.SECONDS);
 		driver.get("http://www.yahoo.com");
 		
+	}
+
+	private static void destruirConfiguracion() {
+		driver.close();
+
 	}
 
 }
