@@ -25,7 +25,8 @@ public class ExplicitWaitTest {
 		driver.get("http://songs-by-sinatra.herokuapp.com");
 
 		WebDriverWait wait = new WebDriverWait(driver, 15);
-
+		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.linkText("log in")));
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("log in")));
 		WebElement loginLink = wait
 								.until(
 										ExpectedConditions

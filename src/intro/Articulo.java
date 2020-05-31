@@ -6,6 +6,7 @@ public class Articulo {
     double numEstrellas;
     double relacionCalidadPrecio;
 
+
     public Articulo(String nombreArticulo, int precioArticulo, double califArticulo) {
         this.nombre = nombreArticulo;
         this.precio = precioArticulo;
@@ -19,4 +20,5 @@ public class Articulo {
         else
             return false;
     }
+
 }

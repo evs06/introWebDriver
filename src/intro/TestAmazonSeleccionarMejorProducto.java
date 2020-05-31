@@ -4,6 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -14,6 +17,7 @@ public class TestAmazonSeleccionarMejorProducto {
     static WebDriver driver;
     static By idcajaBusqueda = By.id("twotabsearchtextbox");
     static By idlupa = By.id("nav-search-submit-text");
+    static WebDriverWait wait;
 
 
     public static void main(String[] args) {
@@ -21,9 +25,21 @@ public class TestAmazonSeleccionarMejorProducto {
         verificarHomePageAmazon();
         buscarProducto("HP Laptop");
         verificarListaProductos("HP");
-        Articulo mejor = seleccionarMejorArticulo();
-     //   verificarArticuloEnCarrito(mejor);
+        Articulo articuloCarrito = seleccionarMejorArticulo();
+        agregarArticulo();
+        verificarArticuloEnCarrito(articuloCarrito);
         terminarproceso();
+
+    }
+
+    private static void agregarArticulo() {
+
+        WebElement agregarCarrito = driver.findElement(By.cssSelector("[value='Agregar al Carrito']"));
+        //  WebElement irCarrito = driver.findElement(By.cssSelector("#hlb-view-cart-announce"));
+        //  WebElement agregarCarrito = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[value='Agregar al Carrito']")));
+        //WebElement irCarrito = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#hlb-view-cart-announce")));
+
+        agregarCarrito.submit();
 
     }
 
@@ -33,7 +49,23 @@ public class TestAmazonSeleccionarMejorProducto {
 
     }
 
-    private static void verificarArticuloEnCarrito(Articulo mejor) {
+    private static void verificarArticuloEnCarrito(Articulo articuloCarrito) {
+
+        WebElement irCarrito = driver.findElement(By.cssSelector("#hlb-view-cart-announce"));
+       // WebElement irCarrito = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#hlb-view-cart-announce")));
+
+        irCarrito.click();
+
+        WebElement ArtCarrito = driver.findElement(By.cssSelector(".sc-product-title"));
+        String nomArtCarrito = ArtCarrito.getText();
+
+        if(articuloCarrito.nombre.equals(nomArtCarrito)){
+            System.out.print("El artículo es: " + nomArtCarrito);
+        }
+        else{
+            System.out.print("No coincide el artículo");
+        }
+
     }
 
     private static Articulo seleccionarMejorArticulo() {
@@ -79,8 +111,10 @@ public class TestAmazonSeleccionarMejorProducto {
             //saco un articulo.  Si es mejor que el anterior, mejorArticulo es el articulo actual.
             // si el articulo tiene nombre, precio y calificacion, meterlo a la lista de articulos.
         }
+
         WebElement nomArticulolnk = driver.findElement(By.linkText(mejorArticulo.nombre));
         nomArticulolnk.click();
+
         // voy a sacar el articulo con mejor calificacion.
         return mejorArticulo;
     }
