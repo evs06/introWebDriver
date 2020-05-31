@@ -22,7 +22,7 @@ public class TodoistAddProjectTest {
         validarLandingPage();
         login("jomarnavarro@gmail.com", "Test@1234");
         validarHomePage();
-        crearProyecto("proyectoXXXX", "Teal");
+        crearProyecto("proyectoXXXXL", "Teal");
         validarProyecto("proyectoXXXXL", "color: rgb(21, 143, 173);");
         terminarproceso();
     }
@@ -100,13 +100,11 @@ public class TodoistAddProjectTest {
 
         for(WebElement colors: listColors) {
 
-            WebElement nomColor = colors.findElement(By.cssSelector("#dropdown-select-6-listbox > li > span.color_dropdown_select__name"));
-            String textColor = nomColor.getText();
+            //WebElement nomColor = colors.findElement(By.cssSelector(".color_dropdown_select__name"));
+            String textColor = colors.getText();
 
             if(textColor.equals(color)){
-
-                WebElement teal = colors.findElement(By.cssSelector("[aria-label='38']"));
-                teal.click();
+                colors.click();
                 break;
             }
         }
